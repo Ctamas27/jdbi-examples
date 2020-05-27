@@ -9,7 +9,7 @@ public class Main {
         Jdbi jdbi = Jdbi.create("jdbc:h2:mem:test");
         try (Handle handle = jdbi.open()) {
             handle.execute("""
-                    CREATE TABLE legoset (
+                        CREATE TABLE legoset (
                     	number VARCHAR PRIMARY KEY,
                     	year INTEGER NOT NULL,
                     	pieces INTEGER NOT NULL

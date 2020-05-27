@@ -24,13 +24,13 @@ public class Main {
         jdbi.installPlugin(new SqlObjectPlugin());
 
         try (Handle handle = jdbi.open()) {
-            UserDao dao = (UserDao) handle.attach(User.class);
+            UserDao dao = handle.attach(UserDao.class);
             dao.createTable();
             dao.insertUser(user);
             dao.findById(1);
             dao.findByUsername("PP");
             dao.listUsers();
-            dao.deleteUser(user);
+            dao.deleteUser(dao.findById(1).get());
         }
     }
 }

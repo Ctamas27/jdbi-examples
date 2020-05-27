@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface UserDao {
 
     @SqlUpdate("""
-        CREATE TABLE User (
+        CREATE TABLE user (
             id IDENTITY PRIMARY KEY,
             username VARCHAR2 NOT NULL,
             password VARCHAR2 NOT NULL,
@@ -23,20 +23,20 @@ public interface UserDao {
             email VARCHAR2 NOT NULL,
             gender VARCHAR2 NOT NULL,
             dob DATE NOT NULL,
-            enabled BOOLEAN NOT NULL,
+            enabled BOOLEAN NOT NULL
         )
         """
     )
 
     void createTable();
 
-    @SqlUpdate("INSERT INTO User (id, username, password, name, email, gender, dob, enabled) VALUES (:id, :username, :password, :name, :email, :gender, :dob, :enabled)")
+    @SqlUpdate("INSERT INTO user VALUES (:id, :username, :password, :name, :email, :gender, :dob, :enabled)")
     @GetGeneratedKeys
     long insertUser(@Bind("id") long id, @Bind("username") String username, @Bind("password") String password, @Bind("name") String name, @Bind("email") String email, @Bind("gender") String gender, @Bind("dob") Date dob, @Bind("enabled") Boolean enabled);
 
-    @SqlUpdate("INSERT INTO User (id, username, password, name, email, gender, dob, enabled) VALUES (:id, :username, :password, :name, :email, :gender, :dob, :enabled)")
+    @SqlUpdate("INSERT INTO user VALUES (:id, :username, :password, :name, :email, :gender, :dob, :enabled)")
     @GetGeneratedKeys
-    long insertUser(@BindBean User User);
+    long insertUser(@BindBean User user);
 
     @SqlQuery("SELECT * FROM user WHERE id = :id")
     Optional<User> findById(@Bind("id") long id);
@@ -47,8 +47,8 @@ public interface UserDao {
     @SqlQuery("SELECT * FROM user ORDER BY username")
     List<User> listUsers();
 
-    @SqlQuery("DELETE FROM User WHERE user = :user")
-    void deleteUser(@Bind("User") User user);
+    @SqlQuery("DELETE FROM User WHERE id = :user.id")
+    void deleteUser(@Bind("user") User user);
 
 
 
